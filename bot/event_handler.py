@@ -52,6 +52,16 @@ class RtmEventHandler(object):
                 for domain in env.URL_BLACKLIST:
                     if title.find(domain) != -1: return
 
+                # TODO: fix unicode string as input error
+                # algo_client = Algorithmia.client(env.ALGO_TOKEN)
+                # algo_text = algo_client.algo('util/Html2Text/0.1.4')
+                # algo_summary = algo_client.algo('nlp/Summarizer/0.1.3')
+                # link_text = algo_text.pipe(title).result
+                # summary = algo_summary.pipe(link_text).result
+                # channel_id = event['channel']
+                # msg = "Summary: {}".format(summary)
+                # self.msg_writer.send_message(channel_id, msg)
+
                 response = self.clients.web.users.info(event['user'])
                 username = response.body['user']['name']
 
@@ -75,30 +85,3 @@ class RtmEventHandler(object):
                 logger.debug(json.dumps(payload))
                 url = "https://maker.ifttt.com/trigger/{}/with/key/{}".format(env.IFTTT_EVENT, env.IFTTT_TOKEN)
                 requests.post(url, json=payload)
-
-                # client = Algorithmia.client(env.ALGO_TOKEN)
-
-                # algo_text = client.algo('util/Html2Text/0.1.4')
-                # algo_summary = client.algo('nlp/Summarizer/0.1.3')
-
-                # link_text = algo_text.pipe(title).result
-                # summary = algo_summary.pipe(link_text).result
-
-                # channel_id = event['channel']
-                # msg = "Summary: {}".format(summary)
-                # self.msg_writer.send_message(channel_id, msg)
-
-            # if self.clients.is_bot_mention(msg_txt):
-            #     # e.g. user typed: "@pybot tell me a joke!"
-            #     if 'help' in msg_txt:
-            #         self.msg_writer.write_help_message(event['channel'])
-            #     elif re.search('hi|hey|hello|howdy', msg_txt):
-            #         self.msg_writer.write_greeting(event['channel'], event['user'])
-            #     elif 'joke' in msg_txt:
-            #         self.msg_writer.write_joke(event['channel'])
-            #     elif 'attachment' in msg_txt:
-            #         self.msg_writer.demo_attachment(event['channel'])
-            #     elif 'echo' in msg_txt:
-            #         self.msg_writer.send_message(event['channel'], msg_txt)
-            #     else:
-            #         self.msg_writer.write_prompt(event['channel'])
