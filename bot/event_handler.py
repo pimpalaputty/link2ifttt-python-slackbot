@@ -57,13 +57,10 @@ class RtmEventHandler(object):
 
                 if env.ALGO_TOKEN:
                     algo_client = Algorithmia.client(env.ALGO_TOKEN)
-                    algo_text = algo_client.algo('util/Html2Text/0.1.4')
-                    algo_summary = algo_client.algo('nlp/Summarizer/0.1.3')
-                    link_text = algo_text.pipe(title).result
-                    summary = algo_summary.pipe(link_text).result
-                    channel_id = event['channel']
+                    algo_summary = algo_client.algo('nlp/SummarizeURL/0.1.1')
+                    summary = algo_summary.pipe(title).result
                     msg = "Summary of {}: \n>{}".format(title, summary)
-                    self.msg_writer.send_message(channel_id, msg)
+                    self.msg_writer.send_message(event['channel'], msg)
 
                 response = self.clients.web.users.info(event['user'])
                 username = response.body['user']['name']
