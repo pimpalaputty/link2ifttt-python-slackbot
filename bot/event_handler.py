@@ -4,6 +4,9 @@ import re
 import requests
 import Algorithmia
 import env
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 logger = logging.getLogger(__name__)
 
@@ -52,15 +55,15 @@ class RtmEventHandler(object):
                 for domain in env.URL_BLACKLIST:
                     if title.find(domain) != -1: return
 
-                # TODO: fix unicode string as input error
-                # algo_client = Algorithmia.client(env.ALGO_TOKEN)
-                # algo_text = algo_client.algo('util/Html2Text/0.1.4')
-                # algo_summary = algo_client.algo('nlp/Summarizer/0.1.3')
-                # link_text = algo_text.pipe(title).result
-                # summary = algo_summary.pipe(link_text).result
-                # channel_id = event['channel']
-                # msg = "Summary: {}".format(summary)
-                # self.msg_writer.send_message(channel_id, msg)
+                if env.ALGO_TOKEN:
+                    algo_client = Algorithmia.client(env.ALGO_TOKEN)
+                    algo_text = algo_client.algo('util/Html2Text/0.1.4')
+                    algo_summary = algo_client.algo('nlp/Summarizer/0.1.3')
+                    link_text = algo_text.pipe(title).result
+                    summary = algo_summary.pipe(link_text).result
+                    channel_id = event['channel']
+                    msg = "Summary of {}: \n>{}".format(title, summary)
+                    self.msg_writer.send_message(channel_id, msg)
 
                 response = self.clients.web.users.info(event['user'])
                 username = response.body['user']['name']

@@ -1,4 +1,4 @@
-name: Link Crawler
+name: Links2IFTTT
 description: A simple Python bot crawls links from messages and push into an IFTTT recipe 
 avatar: resources/avatar.png
 background: resources/background.png
@@ -9,14 +9,14 @@ config:
     default: DEBUG
   - name: URL_BLACKLIST
     friendly_name: URL Blacklist array
-    info: e.g. ['drive.com', 'trello.com', 'misys.com']
+    info: e.g. ['drive.google.com', 'docs.google.com', 'trello.com']
     type: text
   - name: ALGO_TOKEN
-    friendly_name: Algorithmia token
-    info: See http://docs.algorithmia.com/#api-keys
+    friendly_name: Algorithmia.com token
+    info: Enter an Algorithmia.com token to enable link content summarizer. See http://docs.algorithmia.com/#api-keys
     type: secret
   - name: IFTTT_TOKEN
-    friendly_name: IFTTT token
+    friendly_name: IFTTT.com token
     info: See https://ifttt.com/maker
     type: secret
   - name: IFTTT_EVENT
