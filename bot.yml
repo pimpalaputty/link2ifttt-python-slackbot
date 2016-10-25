@@ -1,4 +1,4 @@
-name: Links2IFTTT
+name: Link2IFTTT
 description: A simple Python bot crawls links from messages and push into an IFTTT recipe 
 avatar: resources/avatar.png
 background: resources/background.png
