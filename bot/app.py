@@ -36,12 +36,6 @@ if __name__ == "__main__":
         botManager = bot_manager.BotManager(spawn_bot)
         res = resourcer.Resourcer(botManager)
         res.start()
-    elif env.ALGO_TOKEN == "":
-        logging.info("ALGO_TOKEN env var not set, expecting token to be provided by Resourcer events")
-        env.ALGO_TOKEN = None
-        botManager = bot_manager.BotManager(spawn_bot)
-        res = resourcer.Resourcer(botManager)
-        res.start()
     else:
         # only want to run a single instance of the bot in dev mode
         bot = SlackBot(env.SLACK_TOKEN)
